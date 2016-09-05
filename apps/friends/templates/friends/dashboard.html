@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Friends</title>
+  <style>
+  	table {
+  		width: 500px;
+  		border: 1px solid black;
+  	}
+  	th, td {
+  		border: 1px solid black;
+  		text-align: center;
+  	}
+
+  </style>
+</head>
+<body>
+	<p style="float: right"><a href="/logout">Logout</a></p>
+	<h1>Hello, {{request.session.alias}}!</h1>
+	<h3>Here is the list of your friends:</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Alias</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for friend in friends %}
+			{% if friend.myself__user2__alias == None %}
+				<p>You don't have friends yet</p>
+			{% else %}
+				<tr>
+					<td>{{friend.myself__user2__alias}}</td>
+					<td><a href="/user/{{friend.myself__user2__id}}">View Profile</a> | <a href="/user/{{friend.myself__user2__id}}/delete">Remove as Friend</a></td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+		</tbody>
+	</table>
+	<hr>
+	<h3>Other Users not on your friends list:</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Alias</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for friend in nonFriends %}
+			<tr>
+				<td><a href="/user/{{friend.id}}">{{friend.alias}}</a></td>
+				<td><button type="button"><a href="/user/add/{{friend.id}}">Add as a Friend</a></button></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>
